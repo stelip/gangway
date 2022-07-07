@@ -27,7 +27,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt"
 	"github.com/ghodss/yaml"
 	"github.com/heptiolabs/gangway/internal/oidc"
 	log "github.com/sirupsen/logrus"

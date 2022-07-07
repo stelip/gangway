@@ -16,7 +16,7 @@ package oidc
 import (
 	"testing"
 
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt"
 )
 
 func TestParseToken(t *testing.T) {
