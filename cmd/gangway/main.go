@@ -58,6 +58,20 @@ func main() {
 		os.Exit(1)
 	}
 
+	var level, errParse = log.ParseLevel(cfg.LogLevel)
+	if errParse != nil {
+		log.Errorf("Could not parse error level: %s", errParse)
+		log.SetLevel(log.DebugLevel)
+	} else {
+		log.SetLevel(level)
+	}
+
+	log.Trace("Trace...")
+	log.Debug("Debug...")
+	log.Info("Info....")
+	log.Warn("YWarn...")
+	log.Error("SError...")
+
 	oauth2Cfg = &oauth2.Config{
 		ClientID:     cfg.ClientID,
 		ClientSecret: cfg.ClientSecret,

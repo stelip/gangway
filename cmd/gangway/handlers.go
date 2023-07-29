@@ -255,6 +255,8 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	log.Debug("Rediret...=>%s", fmt.Sprintf("%s/commandline", cfg.HTTPPath))
+
 	http.Redirect(w, r, fmt.Sprintf("%s/commandline", cfg.HTTPPath), http.StatusSeeOther)
 }
 
