@@ -27,8 +27,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/golang-jwt/jwt"
 	"github.com/ghodss/yaml"
+	"github.com/golang-jwt/jwt"
 	"github.com/heptiolabs/gangway/internal/oidc"
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/oauth2"
@@ -197,6 +197,7 @@ func logoutHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func callbackHandler(w http.ResponseWriter, r *http.Request) {
+	log.Debug("Callback...")
 	ctx := context.WithValue(r.Context(), oauth2.HTTPClient, transportConfig.HTTPClient)
 
 	// load up session cookies
