@@ -18,6 +18,7 @@ import (
 	"fmt"
 
 	"github.com/golang-jwt/jwt"
+	log "github.com/sirupsen/logrus"
 	"golang.org/x/oauth2"
 )
 
@@ -33,6 +34,7 @@ type Token struct {
 
 // ParseToken returns a jwt token from an idToken, returns error if it cannot parse
 func ParseToken(idToken, clientSecret string) (*jwt.Token, error) {
+	log.Debug(fmt.Sprintf("ParseToken secret[%s] token [%s]", clientSecret, idToken))
 	token, _ := jwt.Parse(idToken, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
@@ -45,5 +47,8 @@ func ParseToken(idToken, clientSecret string) (*jwt.Token, error) {
 
 // Exchange takes an oauth2 auth token and exchanges for an id_token
 func (t *Token) Exchange(ctx context.Context, code string) (*oauth2.Token, error) {
+
+	log.Debug(fmt.Sprintf("Exchange code [%s]", code))
+
 	return t.OAuth2Cfg.Exchange(ctx, code)
 }
