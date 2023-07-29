@@ -233,11 +233,16 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	// use the access code to retrieve a token
 	log.Debug("Getting Access code...")
 	code := r.URL.Query().Get("code")
+
+	log.Debug("Exchange OAuth2 token %s", code)
+
 	token, err := o2token.Exchange(ctx, code)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	log.Debug("Got Token %s", token)
 
 	sessionIDToken.Values["id_token"] = token.Extra("id_token")
 	sessionRefreshToken.Values["refresh_token"] = token.RefreshToken
