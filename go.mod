@@ -10,6 +10,7 @@ require (
 	github.com/gorilla/sessions v1.2.1
 	github.com/justinas/alice v1.2.0
 	github.com/kelseyhightower/envconfig v1.4.0
+	github.com/mjibson/esc v0.2.0 // indirect
 	github.com/sirupsen/logrus v1.8.1
 	golang.org/x/crypto v0.0.0-20220622213112-05595931fe9d
 	golang.org/x/net v0.0.0-20220706163947-c90051bbdb60 // indirect
@@ -17,7 +18,7 @@ require (
 	golang.org/x/sys v0.0.0-20220704084225-05e143d24a9e // indirect
 	gopkg.in/yaml.v2 v2.4.0
 	k8s.io/apimachinery v0.24.2 // indirect
-	k8s.io/client-go v0.24.2 
+	k8s.io/client-go v0.24.2
 	k8s.io/klog/v2 v2.70.1 // indirect
 	sigs.k8s.io/json v0.0.0-20220525155127-227cbc7cc124 // indirect
 )
