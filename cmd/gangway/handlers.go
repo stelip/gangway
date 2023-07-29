@@ -207,12 +207,14 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	log.Debug("Getting session.... token")
 	sessionIDToken, err := gangwayUserSession.Session.Get(r, "gangway_id_token")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
+	log.Debug("Getting refresh.... token")
 	sessionRefreshToken, err := gangwayUserSession.Session.Get(r, "gangway_refresh_token")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -220,6 +222,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// verify the state string
+	log.Debug("Verify state...")
 	state := r.URL.Query().Get("state")
 
 	if state != session.Values["state"] {
@@ -228,6 +231,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// use the access code to retrieve a token
+	log.Debug("Getting Access code...")
 	code := r.URL.Query().Get("code")
 	token, err := o2token.Exchange(ctx, code)
 	if err != nil {
@@ -238,17 +242,23 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	sessionIDToken.Values["id_token"] = token.Extra("id_token")
 	sessionRefreshToken.Values["refresh_token"] = token.RefreshToken
 
+	log.Debug("Saving Session token...")
+
 	// save the session cookies
 	err = session.Save(r, w)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	log.Debug("Saving ID token...")
 	err = sessionIDToken.Save(r, w)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	log.Debug("Saving Refresh token...")
 	err = sessionRefreshToken.Save(r, w)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
